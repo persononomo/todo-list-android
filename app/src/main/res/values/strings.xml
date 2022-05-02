@@ -7,6 +7,6 @@
     <string name="add">Add</string>
     <string name="save">Save</string>
 
-    <string name="todo_lost">TODO list</string>
+    <string name="todo_list">TODO list</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 </resources>

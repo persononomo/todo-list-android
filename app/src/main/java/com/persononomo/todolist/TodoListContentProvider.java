@@ -14,13 +14,12 @@ import android.net.Uri;
 import java.util.HashMap;
 
 public class TodoListContentProvider extends ContentProvider {
-    public TodoListContentProvider(Context context) {
-        dbHelper = new DatabaseHelper(context);
-        db = dbHelper.getWritableDatabase();
+    public TodoListContentProvider() {
+
     }
 
     // defining authority so that other application can access it
-    static final String PROVIDER_NAME = "com.persononomo.todolist.provider";
+    static final String PROVIDER_NAME = "com.persononomo.todolist.TodoListContentProvider";
 
     // defining content URI
     static final String URL = "content://" + PROVIDER_NAME + "/todos";
@@ -60,11 +59,9 @@ public class TodoListContentProvider extends ContentProvider {
     // creating the database
     @Override
     public boolean onCreate() {
-        System.out.println("onCreate");
-//        Context context = getContext();
-//        dbHelper = new DatabaseHelper(context);
-//        db = dbHelper.getWritableDatabase();
-//        db_read = dbHelper.getReadableDatabase();
+        Context context = getContext();
+        dbHelper = new DatabaseHelper(context);
+        db = dbHelper.getWritableDatabase();
         return dbHelper != null;
     }
     @Override
@@ -106,7 +103,7 @@ public class TodoListContentProvider extends ContentProvider {
         int count = 0;
         switch (uriMatcher.match(uri)) {
             case uriCode:
-                count = dbHelper.getWritableDatabase().update(TABLE_NAME, values, selection, selectionArgs);
+                count = db.update(TABLE_NAME, values, selection, selectionArgs);
                 break;
             default:
                 throw new IllegalArgumentException("Unknown URI " + uri);
@@ -120,7 +117,7 @@ public class TodoListContentProvider extends ContentProvider {
         int count = 0;
         switch (uriMatcher.match(uri)) {
             case uriCode:
-                count = dbHelper.getWritableDatabase().delete(TABLE_NAME, selection, selectionArgs);
+                count = db.delete(TABLE_NAME, selection, selectionArgs);
                 break;
             default:
                 throw new IllegalArgumentException("Unknown URI " + uri);
@@ -139,10 +136,10 @@ public class TodoListContentProvider extends ContentProvider {
     static final String DATABASE_NAME = "TodoDB";
 
     // declaring table name of the database
-    static final String TABLE_NAME = "Todos";
+    static final String TABLE_NAME = "todos";
 
     // declaring version of the database
-    static final int DATABASE_VERSION = 1;
+    static final int DATABASE_VERSION = 2;
 
     // sql query to create the table
     static final String CREATE_DB_TABLE = " CREATE TABLE " + TABLE_NAME
@@ -160,7 +157,7 @@ public class TodoListContentProvider extends ContentProvider {
         // creating a table in the database
         @Override
         public void onCreate(SQLiteDatabase db) {
-            System.out.println("!!!!!!");
+            System.out.println("onCreate");
             db.execSQL(CREATE_DB_TABLE);
         }
 

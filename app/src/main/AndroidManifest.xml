@@ -20,6 +20,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <provider
+            android:name=".TodoListContentProvider"
+            android:authorities="com.persononomo.todolist.TodoListContentProvider"
+            android:directBootAware="true"
+            android:enabled="true">
+        </provider>
+
     </application>
 
 </manifest>

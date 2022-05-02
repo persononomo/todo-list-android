@@ -21,7 +21,7 @@ class AddItemFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
     private lateinit var viewOfLayout: View
-    private lateinit var contentProvider: TodoListContentProvider
+
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
@@ -29,8 +29,7 @@ class AddItemFragment : Fragment() {
 
         _binding = AddItemBinding.inflate(inflater, container, false)
         viewOfLayout = binding.root
-        contentProvider = TodoListContentProvider(context)
-        return viewOfLayout
+    return viewOfLayout
 
     }
 
@@ -42,7 +41,7 @@ class AddItemFragment : Fragment() {
             val todo = viewOfLayout.findViewById<EditText>(R.id.textview_second).getText().toString()
             values.put(TodoListContentProvider.text, todo);
             print(todo)
-            contentProvider.insert(TodoListContentProvider.CONTENT_URI, values);
+            activity?.contentResolver?.insert(TodoListContentProvider.CONTENT_URI, values);
             findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
         }
     }
